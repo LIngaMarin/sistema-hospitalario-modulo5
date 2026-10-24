@@ -231,9 +231,17 @@ La aplicación queda en http://localhost:8080
 
 ---
 
+## Evaluación 02 – avance de Renzo (rama `eval02-renzo`)
+
+- [x] `pom.xml`: se agregaron `spring-boot-starter-security` y `spring-boot-starter-aspectj`.
+- [x] `ddl-auto=update`: los datos ya no se borran al reiniciar.
+- [x] `SecurityConfig` temporal que deja todas las rutas abiertas hasta implementar el login por rol (P5).
+- [ ] P1: relaciones `@OneToMany` y edición de antecedentes, antecedentes familiares y alergias.
+- [ ] P2: auditoría con AOP.
+- [ ] P5: login y control de acceso por rol.
+
 ## Pendiente
 
-- Cambiar `ddl-auto` de `create-drop` a `update` en `application.properties` antes de la entrega, para no perder los datos cada vez que se reinicia la aplicación.
 - Probar todos los endpoints en Postman (incluidos los nuevos de `Paciente` y `HistoriaClinica`) y tomar las capturas para el informe.
 - Verificar en la base de datos que las llaves foráneas de `antecedente`, `antecedente_familiar` y `alergia` hacia `historia_clinica` se crearon correctamente.
 - Revisar la relación `AntecedenteFamiliar` frente a `CondicionMedica`: hay dos formas de registrar antecedentes familiares (la entidad propia de Renzo, ya con relación real hacia `HistoriaClinica`, y el catálogo `@ManyToMany` de Lucas) y conviene que el equipo decida si se unifican antes de la entrega.
