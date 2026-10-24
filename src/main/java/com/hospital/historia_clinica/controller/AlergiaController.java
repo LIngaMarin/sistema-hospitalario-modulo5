@@ -37,6 +37,12 @@ public class AlergiaController {
         return "redirect:/alergias";
     }
 
+    @GetMapping("/alergias/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("alergia", alergiaService.obtener(id));
+        return "alergia-form";
+    }
+
     @GetMapping("/alergias/eliminar/{id}")
     public String eliminarAlergia(@PathVariable Long id) {
         alergiaService.eliminar(id);

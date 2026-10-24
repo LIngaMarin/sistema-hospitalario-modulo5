@@ -1,5 +1,6 @@
 package com.hospital.historia_clinica.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,6 +34,20 @@ public class HistoriaClinica {
             inverseJoinColumns = @JoinColumn(name = "condicion_id")
     )
     private List<CondicionMedica> antecedentesFamiliares = new ArrayList<>();
+
+    // Lado inverso de las relaciones @ManyToOne de Antecedente, AntecedenteFamiliar y Alergia.
+    // Al eliminar la historia se eliminan tambien sus registros, para no dejar filas huerfanas.
+    @JsonIgnore
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Antecedente> antecedentes = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AntecedenteFamiliar> familiares = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "historiaClinica", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Alergia> alergias = new ArrayList<>();
 
     // Constructores
     public HistoriaClinica() {
@@ -92,6 +107,30 @@ public class HistoriaClinica {
 
     public void setAntecedentesFamiliares(List<CondicionMedica> antecedentesFamiliares) {
         this.antecedentesFamiliares = antecedentesFamiliares;
+    }
+
+    public List<Antecedente> getAntecedentes() {
+        return antecedentes;
+    }
+
+    public void setAntecedentes(List<Antecedente> antecedentes) {
+        this.antecedentes = antecedentes;
+    }
+
+    public List<AntecedenteFamiliar> getFamiliares() {
+        return familiares;
+    }
+
+    public void setFamiliares(List<AntecedenteFamiliar> familiares) {
+        this.familiares = familiares;
+    }
+
+    public List<Alergia> getAlergias() {
+        return alergias;
+    }
+
+    public void setAlergias(List<Alergia> alergias) {
+        this.alergias = alergias;
     }
 
     public void agregarCondicion(CondicionMedica condicion) {
