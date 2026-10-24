@@ -63,6 +63,9 @@ public class HistoriaClinicaService {
     public HistoriaClinica actualizar(Long id, String estado) {
         HistoriaClinica historia = historiaClinicaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Historia clínica no encontrada con id: " + id));
+        if (!"ACTIVA".equals(estado) && !"INACTIVA".equals(estado)) {
+            throw new IllegalArgumentException("Estado invalido: debe ser ACTIVA o INACTIVA");
+        }
         historia.setEstado(estado);
         return historiaClinicaRepository.save(historia);
     }
@@ -76,7 +79,19 @@ public class HistoriaClinicaService {
                 .orElseThrow(() -> new RuntimeException("Historia clínica no encontrada"));
         com.hospital.historia_clinica.model.CondicionMedica condicion = condicionMedicaRepository.findById(condicionId)
                 .orElseThrow(() -> new RuntimeException("Condición médica no encontrada"));
+        boolean yaAsignada = historia.getAntecedentesFamiliares().stream()
+                .anyMatch(c -> c.getId().equals(condicionId));
+        if (yaAsignada) {
+            throw new IllegalArgumentException("La condicion ya esta asignada a esta historia");
+        }
         historia.agregarCondicion(condicion);
+        return historiaClinicaRepository.save(historia);
+    }
+
+    public HistoriaClinica eliminarCondicionFamiliar(Long historiaId, Long condicionId) {
+        HistoriaClinica historia = historiaClinicaRepository.findById(historiaId)
+                .orElseThrow(() -> new RuntimeException("Historia clínica no encontrada"));
+        historia.getAntecedentesFamiliares().removeIf(c -> c.getId().equals(condicionId));
         return historiaClinicaRepository.save(historia);
     }
 

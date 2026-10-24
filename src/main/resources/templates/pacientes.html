@@ -16,6 +16,9 @@
     <a href="/pacientes/nuevo" class="btn btn-primary mb-3">Nuevo paciente</a>
     <a href="/historias/nueva" class="btn btn-secondary mb-3">Generar historia clinica</a>
 
+    <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
     <table class="table table-bordered table-striped">
         <thead class="table-dark">
         <tr>
@@ -23,6 +26,7 @@
             <th>Nombres</th>
             <th>Apellidos</th>
             <th>DNI</th>
+            <th>Acciones</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +35,13 @@
             <td th:text="${p.nombres}"></td>
             <td th:text="${p.apellidos}"></td>
             <td th:text="${p.dni}"></td>
+            <td>
+                <a th:href="@{/pacientes/editar/{id}(id=${p.id})}" class="btn btn-warning btn-sm">Editar</a>
+                <form th:action="@{/pacientes/eliminar/{id}(id=${p.id})}" method="post" class="d-inline"
+                      onsubmit="return confirm('Eliminar este paciente?');">
+                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
