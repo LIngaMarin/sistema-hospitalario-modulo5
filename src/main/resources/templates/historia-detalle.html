@@ -13,6 +13,9 @@
 
     <a href="/historias" class="btn btn-outline-secondary mb-3">Volver</a>
 
+    <div th:if="${mensaje}" class="alert alert-success" th:text="${mensaje}"></div>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+
     <div class="card mb-4">
         <div class="card-body">
             <h5 class="card-title" th:text="${historia.numeroHistoria}"></h5>
@@ -22,8 +25,53 @@
                 Fecha de apertura: <span th:text="${historia.fechaApertura}"></span><br>
                 Estado: <span th:text="${historia.estado}"></span>
             </p>
+            <form th:action="@{/historias/{id}/estado(id=${historia.id})}" method="post" class="row g-2">
+                <div class="col-auto">
+                    <select name="estado" class="form-select">
+                        <option value="ACTIVA" th:selected="${historia.estado == 'ACTIVA'}">ACTIVA</option>
+                        <option value="INACTIVA" th:selected="${historia.estado == 'INACTIVA'}">INACTIVA</option>
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-warning">Cambiar estado</button>
+                </div>
+            </form>
         </div>
     </div>
+
+    <h4>Condiciones medicas (antecedentes familiares)</h4>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Condicion</th>
+            <th>Accion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="c : ${historia.antecedentesFamiliares}">
+            <td th:text="${c.id}"></td>
+            <td th:text="${c.nombre}"></td>
+            <td>
+                <form th:action="@{/historias/{id}/condiciones/{cid}/quitar(id=${historia.id},cid=${c.id})}" method="post">
+                    <button type="submit" class="btn btn-outline-danger btn-sm">Quitar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <form th:action="@{/historias/{id}/condiciones(id=${historia.id})}" method="post" class="row g-2 mb-4">
+        <div class="col-auto">
+            <select name="condicionId" class="form-select" required>
+                <option value="">-- Seleccione condicion --</option>
+                <option th:each="c : ${condiciones}" th:value="${c.id}" th:text="${c.nombre}"></option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Asignar condicion</button>
+            <a href="/condiciones" class="btn btn-outline-secondary">Ver catalogo</a>
+        </div>
+    </form>
 
     <h4>Antecedentes personales</h4>
     <table class="table table-bordered table-striped">
