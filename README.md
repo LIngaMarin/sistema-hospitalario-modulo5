@@ -236,7 +236,7 @@ La aplicación queda en http://localhost:8080
 - [x] `pom.xml`: se agregaron `spring-boot-starter-security` y `spring-boot-starter-aspectj`.
 - [x] `ddl-auto=update`: los datos ya no se borran al reiniciar.
 - [x] `SecurityConfig` temporal que deja todas las rutas abiertas hasta implementar el login por rol (P5).
-- [ ] P1: relaciones `@OneToMany` y edición de antecedentes, antecedentes familiares y alergias.
+- [x] P1: `HistoriaClinica` tiene ahora el lado `@OneToMany` de `Antecedente`, `AntecedenteFamiliar` y `Alergia` (con `cascade` y `orphanRemoval`: al eliminar la historia se eliminan sus registros). Las tres vistas tienen botón **Editar** (`/antecedentes/editar/{id}`, `/antecedentes-familiares/editar/{id}`, `/alergias/editar/{id}`) que reutiliza el formulario.
 - [ ] P2: auditoría con AOP.
 - [ ] P5: login y control de acceso por rol.
 

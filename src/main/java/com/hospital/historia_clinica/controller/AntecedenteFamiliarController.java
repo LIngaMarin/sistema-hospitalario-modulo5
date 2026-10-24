@@ -37,6 +37,12 @@ public class AntecedenteFamiliarController {
         return "redirect:/antecedentes-familiares";
     }
 
+    @GetMapping("/antecedentes-familiares/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("antecedente", antecedenteFamiliarService.obtener(id));
+        return "antecedente-familiar-form";
+    }
+
     @GetMapping("/antecedentes-familiares/eliminar/{id}")
     public String eliminarAntecedenteFamiliar(@PathVariable Long id) {
         antecedenteFamiliarService.eliminar(id);
