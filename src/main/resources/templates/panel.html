@@ -9,19 +9,43 @@
 <body>
 <div class="container mt-4">
 
-    <h2>Modulo 5 - Historia Clinica</h2>
-    <p>Sistema Hospitalario</p>
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h2>Modulo 5 - Historia Clinica</h2>
+            <p>Sistema Hospitalario</p>
+        </div>
+        <div class="text-end">
+            <p class="mb-1">
+                Usuario: <strong th:text="${usuario}"></strong>
+                <span class="badge bg-primary" th:text="${rol}"></span>
+            </p>
+            <form action="/logout" method="post">
+                <button type="submit" class="btn btn-outline-danger btn-sm">Cerrar sesion</button>
+            </form>
+        </div>
+    </div>
 
+    <!-- Cada rol ve solo sus opciones; el backend (SecurityConfig) tambien bloquea las demas rutas -->
     <div class="list-group">
         <a href="/pacientes" class="list-group-item list-group-item-action">Pacientes</a>
-        <a href="/historias" class="list-group-item list-group-item-action">Historias clinicas</a>
-        <a href="/antecedentes" class="list-group-item list-group-item-action">Antecedentes personales</a>
-        <a href="/antecedentes-familiares" class="list-group-item list-group-item-action">Antecedentes familiares</a>
-        <a href="/alergias" class="list-group-item list-group-item-action">Alergias</a>
-        <a href="/condiciones" class="list-group-item list-group-item-action">Condiciones medicas</a>
-        <a href="/usuarios" class="list-group-item list-group-item-action">Usuarios</a>
-        <a href="/roles" class="list-group-item list-group-item-action">Roles</a>
-        <a href="/auditoria" class="list-group-item list-group-item-action">Bitacora de auditoria</a>
+
+        <th:block th:if="${esAdmin or esMedico}">
+            <a href="/historias" class="list-group-item list-group-item-action">Historias clinicas</a>
+            <a href="/antecedentes" class="list-group-item list-group-item-action">Antecedentes personales</a>
+            <a href="/antecedentes-familiares" class="list-group-item list-group-item-action">Antecedentes familiares</a>
+            <a href="/alergias" class="list-group-item list-group-item-action">Alergias</a>
+            <a href="/condiciones" class="list-group-item list-group-item-action">Condiciones medicas</a>
+        </th:block>
+
+        <th:block th:if="${esAdmin or esRecepcionista}">
+            <span class="list-group-item text-muted">Citas (modulo de citas, fuera de este modulo)</span>
+        </th:block>
+
+        <th:block th:if="${esAdmin}">
+            <a href="/usuarios" class="list-group-item list-group-item-action">Usuarios</a>
+            <a href="/roles" class="list-group-item list-group-item-action">Roles</a>
+            <a href="/auditoria" class="list-group-item list-group-item-action">Bitacora de auditoria</a>
+        </th:block>
     </div>
 
 </div>

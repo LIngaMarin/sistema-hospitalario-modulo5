@@ -238,7 +238,10 @@ La aplicación queda en http://localhost:8080
 - [x] `SecurityConfig` temporal que deja todas las rutas abiertas hasta implementar el login por rol (P5).
 - [x] P1: `HistoriaClinica` tiene ahora el lado `@OneToMany` de `Antecedente`, `AntecedenteFamiliar` y `Alergia` (con `cascade` y `orphanRemoval`: al eliminar la historia se eliminan sus registros). Las tres vistas tienen botón **Editar** (`/antecedentes/editar/{id}`, `/antecedentes-familiares/editar/{id}`, `/alergias/editar/{id}`) que reutiliza el formulario.
 - [x] P2: auditoría con AOP. `AuditoriaAspect` (`@Around`) intercepta los métodos `guardar`, `crear`, `actualizar`, `eliminar`, `agregar`, `activar` y `desactivar` de **todos** los services y guarda en la tabla `auditoria` el usuario, la fecha y hora, la operación (REGISTRO / MODIFICACION / ELIMINACION), la entidad y el id del registro. La bitácora se ve en `/auditoria`, con enlace en el panel. Mientras no exista el login (P5), el usuario se guarda como `anonimo`. Los services que se agreguen después (por ejemplo, `UsuarioService` y `RolService`) quedan auditados solos si usan esos mismos nombres de método.
-- [ ] P5: login y control de acceso por rol.
+- [x] P5: login y control de acceso por rol. `UserDetailsServiceImpl` carga el `Usuario` y su `Rol` (no deja entrar si el usuario o el rol están inactivos). `SecurityConfig` valida las rutas en el backend: ADMINISTRADOR → usuarios, roles y auditoría; MEDICO → historias, antecedentes, alergias y condiciones; RECEPCIONISTA → pacientes y citas; pacientes → los tres. El login es un formulario propio (`/login`), redirige al panel, y el panel muestra solo las opciones del rol. Una ruta no permitida muestra `/acceso-denegado` (403).
+- [x] Guion de exposición de la Evaluación 02: [EXPOSICION-EVALUACION-02.md](EXPOSICION-EVALUACION-02.md).
+
+**Usuarios de prueba** (los crea `DataLoader`): `admin` / `admin123`, `medico` / `medico123`, `recepcion` / `recepcion123`.
 
 ## Pendiente
 
