@@ -231,8 +231,18 @@ La aplicación queda en http://localhost:8080
 
 ---
 
+## Evaluación 02 (en curso)
+
+La Evaluación 02 pide, sobre este mismo proyecto: relaciones JPA con CRUD (P1), auditoría (P2), gestión de usuarios y roles (P3), su frontend (P4) y control de acceso por rol (P5). El reparto, el estado de partida y el orden de trabajo están en [EVALUACION-02-REPARTO.md](EVALUACION-02-REPARTO.md).
+
+| Integrante | Preguntas |
+|---|---|
+| **Lucas Inga** | P1 (Paciente, HistoriaClinica, CondicionMedica), P3 usuarios y roles, P4 vistas de usuarios y roles |
+| **Renzo León** | P1 (Antecedente, AntecedenteFamiliar, Alergia), P2 auditoría con AOP, P5 Spring Security por rol |
+
 ## Pendiente
 
+- Evaluación 02: todas las preguntas (ver el reparto arriba).
 - Cambiar `ddl-auto` de `create-drop` a `update` en `application.properties` antes de la entrega, para no perder los datos cada vez que se reinicia la aplicación.
 - Probar todos los endpoints en Postman (incluidos los nuevos de `Paciente` y `HistoriaClinica`) y tomar las capturas para el informe.
 - Verificar en la base de datos que las llaves foráneas de `antecedente`, `antecedente_familiar` y `alergia` hacia `historia_clinica` se crearon correctamente.
