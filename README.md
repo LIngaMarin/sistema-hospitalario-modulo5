@@ -236,8 +236,8 @@ La aplicación queda en http://localhost:8080
 - [x] `pom.xml`: se agregaron `spring-boot-starter-security` y `spring-boot-starter-aspectj`.
 - [x] `ddl-auto=update`: los datos ya no se borran al reiniciar.
 - [x] `SecurityConfig` temporal que deja todas las rutas abiertas hasta implementar el login por rol (P5).
-- [ ] P1: relaciones `@OneToMany` y edición de antecedentes, antecedentes familiares y alergias.
-- [ ] P2: auditoría con AOP.
+- [x] P1: `HistoriaClinica` tiene ahora el lado `@OneToMany` de `Antecedente`, `AntecedenteFamiliar` y `Alergia` (con `cascade` y `orphanRemoval`: al eliminar la historia se eliminan sus registros). Las tres vistas tienen botón **Editar** (`/antecedentes/editar/{id}`, `/antecedentes-familiares/editar/{id}`, `/alergias/editar/{id}`) que reutiliza el formulario.
+- [x] P2: auditoría con AOP. `AuditoriaAspect` (`@Around`) intercepta los métodos `guardar`, `crear`, `actualizar`, `eliminar`, `agregar`, `activar` y `desactivar` de **todos** los services y guarda en la tabla `auditoria` el usuario, la fecha y hora, la operación (REGISTRO / MODIFICACION / ELIMINACION), la entidad y el id del registro. La bitácora se ve en `/auditoria`, con enlace en el panel. Mientras no exista el login (P5), el usuario se guarda como `anonimo`. Los services que se agreguen después (por ejemplo, `UsuarioService` y `RolService`) quedan auditados solos si usan esos mismos nombres de método.
 - [ ] P5: login y control de acceso por rol.
 
 ## Pendiente

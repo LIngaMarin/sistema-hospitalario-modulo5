@@ -38,6 +38,8 @@
             <td th:text="${a.fechaRegistro}"></td>
             <td th:text="${a.observaciones}"></td>
             <td>
+                <a th:href="@{/antecedentes/editar/{id}(id=${a.id})}"
+                   class="btn btn-primary btn-sm">Editar</a>
                 <a th:href="@{/antecedentes/eliminar/{id}(id=${a.id})}"
                    class="btn btn-danger btn-sm">Eliminar</a>
             </td>

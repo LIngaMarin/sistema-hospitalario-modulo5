@@ -37,6 +37,12 @@ public class AntecedenteController {
         return "redirect:/antecedentes";
     }
 
+    @GetMapping("/antecedentes/editar/{id}")
+    public String editar(@PathVariable Long id, Model model) {
+        model.addAttribute("antecedente", antecedenteService.obtener(id));
+        return "antecedente-form";
+    }
+
     @GetMapping("/antecedentes/eliminar/{id}")
     public String eliminarAntecedente(@PathVariable Long id) {
         antecedenteService.eliminar(id);
